@@ -22,29 +22,36 @@ deb ${DEBIAN_MIRROR}-security ${SUITE}/updates main
 EOF
 fi
 
+cat > /etc/apt/apt.conf.d/99translations << EOF
+Acquire::Languages "none";
+EOF
+
 # Update the system
 apt-get update
+
+cat > /etc/dpkg/dpkg.cfg.d/99docker << EOF
+path-exclude=/usr/share/man/*
+path-exclude=/usr/share/doc/*
+path-exclude=/usr/share/locale/*
+path-exclude=/usr/share/gnome/help/*/*
+path-exclude=/usr/share/omf/*/*-*.emf
+path-include=/usr/share/locale/locale.alias
+path-include=/usr/share/locale/en/*
+path-include=/usr/share/locale/en_US.UTF-8/*
+path-include=/usr/share/omf/*/*-en.emf
+path-include=/usr/share/omf/*/*-en_US.UTF-8.emf
+path-include=/usr/share/omf/*/*-C.emf
+path-include=/usr/share/locale/languages
+path-include=/usr/share/locale/all_languages
+path-include=/usr/share/locale/currency/*
+path-include=/usr/share/locale/l10n/*
+EOF
+
 apt-get upgrade
-
-cat > /tmp/preseed << EOF
-localepurge localepurge/mandelete        boolean     true
-localepurge localepurge/nopurge          multiselect en, en_US.UTF-8
-localepurge localepurge/use-dpkg-feature boolean     false
-localepurge localepurge/dontbothernew    boolean     false
-EOF
-debconf-set-selections < /tmp/preseed
-rm -f /tmp/preseed
-
-apt-get -y install localepurge
-localepurge
-
-cat > /tmp/preseed << EOF
-localepurge localepurge/use-dpkg-feature boolean true
-EOF
-
-dpkg-reconfigure localepurge
 
 # cleanup
 apt-get clean
+rm -rf /usr/share/doc/*
+rm -rf /usr/share/man/*
 rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin
 mkdir -p /var/lib/apt/lists/partial
