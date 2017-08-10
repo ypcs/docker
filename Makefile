@@ -1,6 +1,6 @@
 NAMESPACE = ypcs/debian
 
-SUITES = wheezy jessie stretch sid
+SUITES = jessie stretch sid
 DEBIAN_MIRROR = http://deb.debian.org/debian
 
 SUDO = /usr/bin/sudo
