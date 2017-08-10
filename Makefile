@@ -10,6 +10,9 @@ TAR = /bin/tar
 
 all: clean $(SUITES)
 
+push:
+	docker push $(NAMESPACE)
+
 clean:
 	rm -rf *.tar chroot-*
 
