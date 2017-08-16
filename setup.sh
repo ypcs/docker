@@ -48,6 +48,7 @@ path-include=/usr/share/locale/l10n/*
 EOF
 
 apt-get upgrade
+apt-get -y dist-upgrade
 
 # cleanup
 apt-get clean
