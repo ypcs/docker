@@ -56,3 +56,5 @@ rm -rf /usr/share/doc/*
 rm -rf /usr/share/man/*
 rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin
 mkdir -p /var/lib/apt/lists/partial
+
+sed -i "s/\/\/.*:3142\//\/\//g" /etc/apt/sources.list
