@@ -1,7 +1,7 @@
 NAMESPACE = ypcs/debian
 
 SUITES = jessie stretch buster sid
-DEBIAN_MIRROR = http://deb.debian.org/debian
+DEBIAN_MIRROR ?= http://deb.debian.org/debian
 
 SUDO = /usr/bin/sudo
 DEBOOTSTRAP = /usr/sbin/debootstrap
