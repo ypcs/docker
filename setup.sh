@@ -48,9 +48,10 @@ path-include=/usr/share/locale/l10n/*
 EOF
 
 apt-get upgrade
-apt-get -y dist-upgrade
+apt-get --assume-yes dist-upgrade
 
 # cleanup
+apt-get --assume-yes autoremove
 apt-get clean
 rm -rf /usr/share/doc/*
 rm -rf /usr/share/man/*
