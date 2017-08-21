@@ -1,7 +1,7 @@
 FROM ypcs/debian:stretch
 MAINTAINER Ville Korhonen <ville@xd.fi>
 
-ADD prepare.sh /tmp/prepare.sh
-RUN /bin/sh /tmp/prepare.sh && rm -f /tmp/prepare.sh
+ADD scripts/*.sh /tmp/prepare/
+RUN  for f in /tmp/prepare/*.sh ; do sh "$f" ; done && rm -rf /tmp/prepare
 
 CMD ["echo", "hello", "world"]

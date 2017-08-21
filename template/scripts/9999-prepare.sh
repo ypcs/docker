@@ -3,14 +3,6 @@ set -e
 
 export DEBIAN_FRONTEND="noninteractive"
 
-apt-get update
-apt-get upgrade
-
-apt-get --no-install-recommends --assume-yes install \
-    build-essential # <-- add your packages here
-
-# Do your modifications here
-
 # cleanup
 apt-get autoremove --assume-yes
 apt-get clean
