@@ -4,6 +4,8 @@ set -e
 export DEBIAN_FRONTEND="noninteractive"
 
 # cleanup
+rm -f /etc/apt/apt.conf.d/99docker
+
 apt-get autoremove --assume-yes
 apt-get clean
 rm -rf /usr/share/doc/*
