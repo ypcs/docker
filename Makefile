@@ -30,3 +30,8 @@ chroot-%:
 
 import-%: %.tar
 	docker import - $(NAMESPACE):$* < $<
+
+images:
+	$(MAKE) -C $@
+
+.PHONY: images
