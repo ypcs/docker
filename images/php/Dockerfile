@@ -23,6 +23,7 @@ RUN \
 	php${PHP_VERSION}-xml
 
 RUN \
+    mkdir -p /run/php && \
     { \
         echo '[global]' ; \
         echo 'error_log = /proc/self/fd/2' ; \
@@ -31,11 +32,12 @@ RUN \
         echo 'access.log = /proc/self/fd/2' ; \
         echo 'clear_env = no' ; \
         echo 'catch_workers_output = yes' ; \
-    } |tee /etc/php/${PHP_VERSION}/fpm/pool.d/zz-docker.conf
+    } |tee /etc/php/${PHP_VERSION}/fpm/pool.d/zz-docker.conf && \
+    sed -i "s/^listen = .*/listen = 9000/g" /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 WORKDIR /var/www/html
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["sh", "-c", "php-fpm${PHP_VERSION}"]
