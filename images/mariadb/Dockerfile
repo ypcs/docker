@@ -1,5 +1,8 @@
 FROM ypcs/debian:stretch
 
+ARG VCS_REF
+LABEL org.label-schema.vcs-ref=$VCS_REF
+
 RUN \
     apt-get update && \
     apt-get -y upgrade && \

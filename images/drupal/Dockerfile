@@ -1,5 +1,8 @@
 FROM ypcs/php:7.0
 
+ARG VCS_REF
+LABEL org.label-schema.vcs-ref=$VCS_REF
+
 RUN \
     apt-get update && \
     apt-get --assume-yes upgrade && \

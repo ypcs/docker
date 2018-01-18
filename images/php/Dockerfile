@@ -1,5 +1,8 @@
 FROM ypcs/debian:stretch
 
+ARG VCS_REF
+LABEL org.label-schema.vcs-ref=$VCS_REF
+
 # Heavily based on upstream Docker config, but we're using
 # packages from Debian
 
