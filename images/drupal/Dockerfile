@@ -25,8 +25,3 @@ RUN \
     mv drush.phar /usr/local/bin/drush && \
     chmod +x /usr/local/bin/drush
 
-WORKDIR /var/www/html
-USER www-data
-
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
