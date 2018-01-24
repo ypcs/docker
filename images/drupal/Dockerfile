@@ -3,18 +3,26 @@ FROM ypcs/php:7.0
 ARG VCS_REF
 LABEL org.label-schema.vcs-ref=$VCS_REF
 
+ENV DRUSH_VERSION 8.1.15
+ENV DRUSH_SHA256 6999d72e51577b1e20cfaec87152d9905b714f5812861692877b8424a4e2358a
+
 RUN \
     apt-get update && \
     apt-get --assume-yes upgrade && \
-    apt-get --assume-yes install curl
+    apt-get --assume-yes install \
+        curl \
+        php-zip
+
+WORKDIR /tmp
+
+RUN \
+    curl -fSL "https://github.com/drush-ops/drush/releases/download/${DRUSH_VERSION}/drush.phar" -o drush.phar && \
+    echo "${DRUSH_SHA256} *drush.phar" |sha256sum -c - && \
+    mv drush.phar /usr/local/bin/drush && \
+    chmod +x /usr/local/bin/drush
 
 WORKDIR /var/www/html
+USER www-data
 
-ENV DRUPAL_VERSION 7.56
-ENV DRUPAL_MD5 5d198f40f0f1cbf9cdf1bf3de842e534
-
-RUN curl -fSL "https://ftp.drupal.org/files/projects/drupal-${DRUPAL_VERSION}.tar.gz" -o drupal.tar.gz \
-	&& echo "${DRUPAL_MD5} *drupal.tar.gz" | md5sum -c - \
-	&& tar -xz --strip-components=1 -f drupal.tar.gz \
-	&& rm drupal.tar.gz \
-	&& chown -R www-data:www-data sites
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
