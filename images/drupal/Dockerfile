@@ -11,7 +11,11 @@ RUN \
     apt-get --assume-yes upgrade && \
     apt-get --assume-yes install \
         curl \
-        php-zip
+        php-zip && \
+    apt-get autoremove && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/lib/apt/lists/partial
 
 WORKDIR /tmp
 

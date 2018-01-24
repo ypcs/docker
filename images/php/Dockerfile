@@ -23,7 +23,11 @@ RUN \
 	php${PHP_VERSION}-mcrypt \
 	php${PHP_VERSION}-mysql \
 	php${PHP_VERSION}-soap \
-	php${PHP_VERSION}-xml
+	php${PHP_VERSION}-xml && \
+    apt-get autoremove && \
+    apt-get autoclean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/lib/apt/lists/partial
 
 RUN \
     mkdir -p /run/php && \
