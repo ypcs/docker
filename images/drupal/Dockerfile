@@ -27,10 +27,17 @@ RUN \
     chmod +x /usr/local/bin/drush
 
 WORKDIR /var/www/html
+
+# <https://www.drupal.org/node/244924>
 RUN \
     drush \
         pm-download \
         --yes \
         --destination=/var/www \
         --drupal-project-rename="html" \
-        "drupal-${DRUPAL_VERSION}"
+        "drupal-${DRUPAL_VERSION}" && \
+    find /var/www/html -type d -exec chmod 0750 '{}' \; && \
+    find /var/www/html -type f -exec chmod 0640 '{}' \; && \
+    find /var/www/html/sites -type d -name files -exec chmod 0770 '{}' \; && \
+    find /var/www/html/sites -type d -path '*/files/*' -exec chmod 0770 '{}' \; && \
+    find /var/www/html/sites -type f -path '*/files/*' -exec chmod 0660 '{}' \;
