@@ -47,7 +47,7 @@ path-include=/usr/share/locale/currency/*
 path-include=/usr/share/locale/l10n/*
 EOF
 
-apt-get upgrade
+apt-get --assume-yes upgrade
 apt-get --assume-yes dist-upgrade
 
 # cleanup
