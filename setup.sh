@@ -68,7 +68,7 @@ apt-get clean
 rm -rf /usr/share/doc/*
 rm -rf /usr/share/locale/*
 rm -rf /usr/share/man/*
-rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin
+rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin /var/cache/apt/archives/*.deb
 mkdir -p /var/lib/apt/lists/partial
 EOF
 chmod +x /usr/local/sbin/docker-cleanup
