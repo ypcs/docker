@@ -10,8 +10,7 @@ RUN \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends --no-install-suggests --assume-yes nginx-full && \
-    apt-get clean && \
-    apt-get autoclean
+    /usr/local/sbin/docker-cleanup
 
 RUN \
     ln -sf /dev/stdout /var/log/nginx/access.log && \

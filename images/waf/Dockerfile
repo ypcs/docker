@@ -12,10 +12,7 @@ RUN \
     apt-get install --assume-yes \
         libapache2-mod-security2 \
         modsecurity-crs && \
-    apt-get autoremove && \
-    apt-get autoclean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /var/lib/apt/lists/partial
+    /usr/local/sbin/docker-cleanup
 
 RUN \
     mv /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf && \

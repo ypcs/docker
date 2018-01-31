@@ -8,8 +8,7 @@ RUN \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends --no-install-suggests --assume-yes \
         apache2 && \
-    apt-get clean && \
-    apt-get autoclean
+    /usr/local/sbin/docker-cleanup
 
 RUN \
     ln -sf /dev/stdout /var/log/apache2/access.log && \

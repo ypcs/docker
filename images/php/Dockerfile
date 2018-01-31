@@ -13,11 +13,8 @@ RUN \
     apt-get upgrade -y && \
     apt-get --assume-yes install \
     php-db \
-	php${PHP_VERSION}-fpm \
-    apt-get autoremove && \
-    apt-get autoclean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /var/lib/apt/lists/partial
+	php${PHP_VERSION}-fpm && \
+    /usr/local/sbin/docker-cleanup
 
 RUN \
     mkdir -p /run/php && \

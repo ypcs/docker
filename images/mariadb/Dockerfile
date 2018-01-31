@@ -6,7 +6,8 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 RUN \
     apt-get update && \
     apt-get -y upgrade && \
-    apt-get -y install mariadb-server gosu
+    apt-get -y install mariadb-server gosu && \
+    /usr/local/sbin/docker-cleanup
 
 RUN \
     sed -ri 's/^user\s/#&/' /etc/mysql/my.cnf /etc/mysql/conf.d/* && \
