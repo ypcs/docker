@@ -51,11 +51,16 @@ apt-get --assume-yes upgrade
 apt-get --assume-yes dist-upgrade
 
 # cleanup
+cat > /usr/local/sbin/docker-cleanup << EOF
 apt-get --assume-yes autoremove
 apt-get clean
 rm -rf /usr/share/doc/*
 rm -rf /usr/share/man/*
 rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin
 mkdir -p /var/lib/apt/lists/partial
+EOF
+chmod +x /usr/local/sbin/docker-cleanup
+
+exec /usr/local/sbin/docker-cleanup
 
 sed -i "s/\/\/.*:3142\//\/\//g" /etc/apt/sources.list
