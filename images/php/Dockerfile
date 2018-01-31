@@ -13,17 +13,7 @@ RUN \
     apt-get upgrade -y && \
     apt-get --assume-yes install \
     php-db \
-	php${PHP_VERSION}-curl \
 	php${PHP_VERSION}-fpm \
-	php${PHP_VERSION}-gd \
-	php${PHP_VERSION}-imap \
-	php${PHP_VERSION}-intl \
-	php${PHP_VERSION}-json \
-	php${PHP_VERSION}-mbstring \
-	php${PHP_VERSION}-mcrypt \
-	php${PHP_VERSION}-mysql \
-	php${PHP_VERSION}-soap \
-	php${PHP_VERSION}-xml && \
     apt-get autoremove && \
     apt-get autoclean && \
     rm -rf /var/lib/apt/lists/* && \
