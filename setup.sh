@@ -57,7 +57,7 @@ fi
 EOF
 chmod +x /usr/local/sbin/docker-upgrade
 
-exec /usr/local/sbin/docker-upgrade full
+/usr/local/sbin/docker-upgrade full
 
 # cleanup
 cat > /usr/local/sbin/docker-cleanup << EOF
@@ -73,6 +73,6 @@ mkdir -p /var/lib/apt/lists/partial
 EOF
 chmod +x /usr/local/sbin/docker-cleanup
 
-exec /usr/local/sbin/docker-cleanup
+/usr/local/sbin/docker-cleanup
 
 sed -i "s/\/\/.*:3142\//\/\//g" /etc/apt/sources.list
