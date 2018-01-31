@@ -7,11 +7,11 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 ENV DEBUG_MODE 0
 
 RUN \
-    docker-upgrade && \
+    /usr/local/sbin/docker-upgrade && \
     apt-get install --assume-yes \
         libapache2-mod-security2 \
         modsecurity-crs && \
-    docker-cleanup
+    /usr/local/sbin/docker-cleanup
 
 RUN \
     mv /etc/modsecurity/modsecurity.conf-recommended /etc/modsecurity/modsecurity.conf && \

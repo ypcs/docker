@@ -9,11 +9,11 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 ENV PHP_VERSION 7.0
 
 RUN \
-    docker-upgrade && \
+    /usr/local/sbin/docker-upgrade && \
     apt-get --assume-yes install \
     php-db \
 	php${PHP_VERSION}-fpm && \
-    docker-cleanup
+    /usr/local/sbin/docker-cleanup
 
 RUN \
     mkdir -p /run/php && \
