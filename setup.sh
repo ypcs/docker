@@ -50,7 +50,7 @@ set -e
 
 apt-get update
 apt-get --assume-yes upgrade
-if [ "\${1}" == "full" ]
+if [ "\${1}" = "full" ]
 then
     apt-get --assume-yes dist-upgrade
 fi
