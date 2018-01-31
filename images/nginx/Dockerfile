@@ -7,10 +7,11 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 # we use package in Debian instead of upstream.
 
 RUN \
+    docker-upgrade && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get install --no-install-recommends --no-install-suggests --assume-yes nginx-full && \
-    /usr/local/sbin/docker-cleanup
+    docker-cleanup
 
 RUN \
     ln -sf /dev/stdout /var/log/nginx/access.log && \

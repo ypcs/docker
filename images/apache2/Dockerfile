@@ -4,11 +4,10 @@ ARG VCS_REF
 LABEL org.label-schema.vcs-ref=$VCS_REF
 
 RUN \
-    apt-get update && \
-    apt-get upgrade -y && \
+    docker-upgrade && \
     apt-get install --no-install-recommends --no-install-suggests --assume-yes \
         apache2 && \
-    /usr/local/sbin/docker-cleanup
+    docker-cleanup
 
 RUN \
     ln -sf /dev/stdout /var/log/apache2/access.log && \

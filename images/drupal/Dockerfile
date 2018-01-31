@@ -8,8 +8,7 @@ ENV DRUSH_VERSION 8.1.15
 ENV DRUSH_SHA256 6999d72e51577b1e20cfaec87152d9905b714f5812861692877b8424a4e2358a
 
 RUN \
-    apt-get update && \
-    apt-get --assume-yes upgrade && \
+    docker-upgrade && \
     apt-get --assume-yes install \
         curl \
         php-zip \
@@ -23,7 +22,7 @@ RUN \
         php${PHP_VERSION}-mysql \
         php${PHP_VERSION}-soap \
         php${PHP_VERSION}-xml && \
-    /usr/local/sbin/docker-cleanup
+    docker-cleanup
 
 WORKDIR /tmp
 
