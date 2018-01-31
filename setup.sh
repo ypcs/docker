@@ -50,10 +50,14 @@ set -e
 
 apt-get update
 apt-get --assume-yes upgrade
+if [ "\${1}" == "full" ]
+then
+    apt-get --assume-yes dist-upgrade
+fi
 EOF
 chmod +x /usr/local/sbin/docker-upgrade
 
-exec /usr/local/sbin/docker-upgrade
+exec /usr/local/sbin/docker-upgrade full
 
 # cleanup
 cat > /usr/local/sbin/docker-cleanup << EOF
