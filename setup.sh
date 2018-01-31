@@ -26,9 +26,6 @@ cat > /etc/apt/apt.conf.d/99translations << EOF
 Acquire::Languages "none";
 EOF
 
-# Update the system
-apt-get update
-
 cat > /etc/dpkg/dpkg.cfg.d/99docker << EOF
 path-exclude=/usr/share/man/*
 path-exclude=/usr/share/doc/*
@@ -47,11 +44,21 @@ path-include=/usr/share/locale/currency/*
 path-include=/usr/share/locale/l10n/*
 EOF
 
+cat > /usr/local/sbin/docker-upgrade << EOF
+#!/bin/sh
+set -e
+
+apt-get update
 apt-get --assume-yes upgrade
-apt-get --assume-yes dist-upgrade
+EOF
+chmod +x /usr/local/sbin/docker-upgrade
+
+exec /usr/local/sbin/docker-upgrade
 
 # cleanup
 cat > /usr/local/sbin/docker-cleanup << EOF
+#!/bin/sh
+set -e
 apt-get --assume-yes autoremove
 apt-get clean
 rm -rf /usr/share/doc/*
