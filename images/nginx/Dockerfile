@@ -3,6 +3,8 @@ FROM ypcs/debian:stretch
 ARG VCS_REF
 LABEL org.label-schema.vcs-ref=$VCS_REF
 
+ENV DOCUMENT_ROOT /var/www/html
+
 # Heavily based on nginx upstreams Docker config, however
 # we use package in Debian instead of upstream.
 

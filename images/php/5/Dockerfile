@@ -6,6 +6,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 # Heavily based on upstream Docker config, but we're using
 # packages from Debian
 
+ENV DOCUMENT_ROOT /var/www/html
 ENV PHP_VERSION 5
 
 RUN \
