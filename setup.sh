@@ -48,6 +48,11 @@ cat > /usr/local/sbin/docker-upgrade << EOF
 #!/bin/sh
 set -e
 
+if [ -n "\${APT_PROXY}" ]
+then
+    echo "Acquire::HTTP::Proxy \"\${APT_PROXY}\";" > /etc/apt/apt.conf.d/99proxy
+fi
+
 apt-get update
 apt-get --assume-yes upgrade
 if [ "\${1}" = "full" ]
@@ -65,6 +70,8 @@ cat > /usr/local/sbin/docker-cleanup << EOF
 set -e
 apt-get --assume-yes autoremove
 apt-get clean
+
+rm -f /etc/apt/apt.conf.d/99proxy
 rm -rf /usr/share/doc/*
 rm -rf /usr/share/locale/*
 rm -rf /usr/share/man/*
