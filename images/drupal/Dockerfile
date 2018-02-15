@@ -33,5 +33,6 @@ RUN \
     chmod +x /usr/local/bin/drush
 
 COPY drupal-permissions.sh /usr/local/sbin/drupal-permissions
+COPY drupal-setup.sh /usr/local/sbin/drupal-setup
 
 WORKDIR /var/www/html
