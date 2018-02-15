@@ -32,15 +32,6 @@ RUN \
     mv drush.phar /usr/local/bin/drush && \
     chmod +x /usr/local/bin/drush
 
-WORKDIR /var/www/html
-
-# <https://www.drupal.org/node/244924>
-RUN \
-    drush \
-        pm-download \
-        --yes \
-        --destination=/var/www \
-        --drupal-project-rename="html" \
-        "drupal-${DRUPAL_VERSION}"
-
 COPY drupal-permissions.sh /usr/local/sbin/drupal-permissions
+
+WORKDIR /var/www/html
