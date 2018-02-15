@@ -1,11 +1,14 @@
 #!/bin/sh
 set -e
 
-SUITE="$1"
-DEBIAN_MIRROR="$2"
+DISTRIBUTION="$1"
+SUITE="$2"
+DEBIAN_MIRROR="$3"
 
 export DEBIAN_FRONTEND="noninteractive"
 
+if [ "${DISTRIBUTION}" = "debian" ]
+then
 echo "I: Update sources.list (add security mirror)..."
 cat > /etc/apt/sources.list << EOF
 deb ${DEBIAN_MIRROR}          ${SUITE}         main
@@ -19,6 +22,14 @@ deb ${DEBIAN_MIRROR}          ${SUITE}-updates main
 #deb-src ${DEBIAN_MIRROR}          ${SUITE}-updates main
 deb ${DEBIAN_MIRROR}-security ${SUITE}/updates main
 #deb-src ${DEBIAN_MIRROR}-security ${SUITE}/updates main
+EOF
+fi
+elif [ "${DISTRIBUTION}" = "ubuntu" ]
+then
+cat > /etc/apt/sources.list << EOF
+deb ${DEBIAN_MIRROR} ${SUITE} main
+deb ${DEBIAN_MIRROR} ${SUITE}-security main
+deb ${DEBIAN_MIRROR} ${SUITE}-updates main
 EOF
 fi
 

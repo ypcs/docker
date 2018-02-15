@@ -1,35 +1,48 @@
-NAMESPACE = ypcs/debian
+NAMESPACE = ypcs
 
 DEBIAN_SUITES = jessie stretch buster sid
 DEBIAN_MIRROR ?= http://deb.debian.org/debian
+
+UBUNTU_SUITES = artful bionic trusty xenial
+UBUNTU_MIRROR ?= http://archive.ubuntu.com/ubuntu
 
 SUDO = /usr/bin/sudo
 DEBOOTSTRAP = /usr/sbin/debootstrap
 DEBOOTSTRAP_FLAGS = --variant=minbase
 TAR = /bin/tar
 
-all: clean $(DEBIAN_SUITES)
+all: $(DEBIAN_SUITES) $(UBUNTU_SUITES)
 
 push:
-	docker push $(NAMESPACE)
+	docker push $(NAMESPACE)/debian
+	docker push $(NAMESPACE)/ubuntu
 
 clean:
 	rm -rf *.tar chroot-*
 
-$(DEBIAN_SUITES): % : %.tar
+$(DEBIAN_SUITES): % : debian-%.tar
+
+$(UBUNTU_SUITES): % : ubuntu-%.tar
 
 %.tar: chroot-%
 	$(TAR) -C $< -c . -f $@
 
-chroot-%:
+chroot-debian-%:
 	$(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(DEBIAN_MIRROR)
 	cp setup.sh $@/tmp/setup.sh
 	chmod +x $@/tmp/setup.sh
-	chroot $@ /tmp/setup.sh $* $(DEBIAN_MIRROR)
+	chroot $@ /tmp/setup.sh debian $* $(DEBIAN_MIRROR)
 	rm -f $@/tmp/setup.sh
 
-import-%: %.tar
-	docker import - $(NAMESPACE):$* < $<
+chroot-ubuntu-%:
+	$(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(UBUNTU_MIRROR)
+	cp setup.sh $@/tmp/setup.sh
+	chmod +x $@/tmp/setup.sh
+	chroot $@ /tmp/setup.sh ubuntu $* $(UBUNTU_MIRROR)
+	rm -f $@/tmp/setup.sh
+
+import-all:
+	./import.sh
 
 images:
 	$(MAKE) -C $@
