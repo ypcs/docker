@@ -15,3 +15,6 @@ find "${DOCUMENT_ROOT}/sites" -type d -name files -exec chmod 0770 '{}' \;
 find "${DOCUMENT_ROOT}/sites" -type d -path '*/files/*' -exec chmod 0770 '{}' \;
 find "${DOCUMENT_ROOT}/sites" -type f -path '*/files/*' -exec chmod 0660 '{}' \;
 
+# needed by civicrm
+find "${DOCUMENT_ROOT}/sites" -type d -name default -maxdepth 1 -exec chmod 0770 '{}' \;
+
