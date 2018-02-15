@@ -40,5 +40,3 @@ RUN \
     tar xzf ../../../../civicrm.tar.gz && \
     rm -f ../../../../civicrm.tar.gz
 
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
