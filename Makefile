@@ -1,6 +1,6 @@
 NAMESPACE = ypcs/debian
 
-SUITES = jessie stretch buster sid
+DEBIAN_SUITES = jessie stretch buster sid
 DEBIAN_MIRROR ?= http://deb.debian.org/debian
 
 SUDO = /usr/bin/sudo
@@ -8,7 +8,7 @@ DEBOOTSTRAP = /usr/sbin/debootstrap
 DEBOOTSTRAP_FLAGS = --variant=minbase
 TAR = /bin/tar
 
-all: clean $(SUITES)
+all: clean $(DEBIAN_SUITES)
 
 push:
 	docker push $(NAMESPACE)
@@ -16,7 +16,7 @@ push:
 clean:
 	rm -rf *.tar chroot-*
 
-$(SUITES): % : %.tar
+$(DEBIAN_SUITES): % : %.tar
 
 %.tar: chroot-%
 	$(TAR) -C $< -c . -f $@
