@@ -31,6 +31,7 @@ RUN \
         ln -sf "/usr/sbin/php${PHP_VERSION}-fpm" "/usr/sbin/php-fpm${PHP_VERSION}" ; \
     fi
 
+RUN mkdir -p /entrypoint-init.d
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
