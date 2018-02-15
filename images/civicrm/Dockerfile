@@ -31,12 +31,7 @@ RUN chown root:mail /etc/ssmtp/ssmtp.conf \
 COPY 404.html /var/www/html/404.html
 COPY 50x.html /var/www/html/50x.html
 
-WORKDIR /var/www
+COPY download.sh /usr/local/sbin/civicrm-install
 
-RUN \
-    curl -fSL "https://storage.googleapis.com/civicrm/civicrm-stable/${CIVICRM_VERSION}/civicrm-${CIVICRM_VERSION}-drupal.tar.gz" -o civicrm.tar.gz && \
-    echo "${CIVICRM_SHA256} *civicrm.tar.gz" |sha256sum -c - && \
-    cd html/sites/all/modules && \
-    tar xzf ../../../../civicrm.tar.gz && \
-    rm -f ../../../../civicrm.tar.gz
+WORKDIR /var/www
 
