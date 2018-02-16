@@ -3,6 +3,10 @@ FROM ypcs/debian:jessie
 ENV JOHN_VERSION 1.8.0-jumbo-1
 ENV JOHN_SHA256 XX
 
+VOLUME /data
+
+RUN mkdir -p /data/wordlists
+
 RUN \
     /usr/local/sbin/docker-upgrade && \
     apt-get --assume-yes install \
@@ -15,6 +19,7 @@ RUN \
         zlib1g-dev \
         libnss3-dev \
         libkrb5-dev \
+        git \
         wget && \
     cd /usr/src && \
     wget "http://www.openwall.com/john/j/john-${JOHN_VERSION}.tar.xz" && \
@@ -23,9 +28,9 @@ RUN \
     cd src && \
     ./configure && \
     make && \
-    cd .. &&  \
-    cp -R run /usr/local/bin && \
-    cd .. && \
+    cd ../run &&  \
+    cp -R * /usr/local/bin && \
+    cd ../.. && \
     rm -rf john-* && \
     apt-get --assume-yes remove \
         build-essential \
@@ -36,3 +41,18 @@ RUN \
         libnss3-dev && \
     /usr/local/sbin/docker-cleanup
 
+RUN \
+    mkdir -p /data/wordlists && \
+    cd /usr/src && \
+    wget "http://kaino.kotus.fi/sanat/nykysuomi/kotus-sanalista-v1.tar.gz" && \
+    tar xzf kotus-sanalista-v1.tar.gz && \
+    sed -ne 's,.*<s>\(.*\)</s>.*,\1,p' kotus-sanalista_v1/kotus-sanalista_v1.xml > finnish.txt && \
+    mv finnish.txt /data/wordlists/ && \
+    rm -rf kotus-sanalista*
+
+RUN \
+    mkdir -p /data/wordlists/passwords && \
+    cd /usr/src && \
+    git clone --depth=1 https://github.com/danielmiessler/SecLists && \
+    cp -R SecLists/Passwords/* /data/wordlists/passwords/ && \
+    rm -rf SecLists
