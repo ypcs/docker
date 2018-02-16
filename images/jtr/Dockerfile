@@ -43,7 +43,8 @@ RUN \
         dpkg-dev \
         libicu52 \
         libnss3-dev && \
-    ln -sf /usr/local/john/john /usr/bin/john && \
+    echo -e '#!/bin/sh\nset -e\n/usr/local/john/john \$@' > /usr/bin/john && \
+    chmod +x /usr/bin/john && \
     /usr/local/sbin/docker-cleanup
 
 RUN \
