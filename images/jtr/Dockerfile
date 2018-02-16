@@ -19,6 +19,7 @@ RUN \
         zlib1g-dev \
         libnss3-dev \
         libkrb5-dev \
+        libgomp1 \
         curl && \
     cd /usr/src && \
     curl -fSL "http://www.openwall.com/john/j/john-${JOHN_VERSION}.tar.xz" -o "john-${JOHN_VERSION}.tar.xz" && \
@@ -27,8 +28,8 @@ RUN \
     cd src && \
     ./configure && \
     make && \
-    cd ../run &&  \
-    cp -R * /usr/local/bin && \
+    cd .. &&  \
+    cp -R run /usr/local/john && \
     cd ../.. && \
     rm -rf john-* && \
     apt-get --assume-yes remove \
@@ -42,6 +43,7 @@ RUN \
         dpkg-dev \
         libicu52 \
         libnss3-dev && \
+    ln -sf /usr/local/john/john /usr/bin/john && \
     /usr/local/sbin/docker-cleanup
 
 RUN \
