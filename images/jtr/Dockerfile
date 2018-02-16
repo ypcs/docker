@@ -38,6 +38,9 @@ RUN \
         libgmp-dev \
         zlib1g-dev \
         libkrb5-dev \
+        gcc \
+        gcc-4.9 \
+        dpkg-dev \
         libnss3-dev && \
     /usr/local/sbin/docker-cleanup
 
