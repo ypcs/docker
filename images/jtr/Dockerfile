@@ -23,7 +23,7 @@ RUN \
     cd src && \
     ./configure && \
     make && \
-    cd .. && 
+    cd .. &&  \
     cp -R run /usr/local/bin && \
     cd .. && \
     rm -rf john-* && \
