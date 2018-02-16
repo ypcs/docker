@@ -19,10 +19,9 @@ RUN \
         zlib1g-dev \
         libnss3-dev \
         libkrb5-dev \
-        git \
-        wget && \
+        curl && \
     cd /usr/src && \
-    wget "http://www.openwall.com/john/j/john-${JOHN_VERSION}.tar.xz" && \
+    curl -fSL "http://www.openwall.com/john/j/john-${JOHN_VERSION}.tar.xz" -o "john-${JOHN_VERSION}.tar.xz" && \
     tar xJf "john-${JOHN_VERSION}.tar.xz" && \
     cd john-* && \
     cd src && \
@@ -41,13 +40,14 @@ RUN \
         gcc \
         gcc-4.9 \
         dpkg-dev \
+        libicu52 \
         libnss3-dev && \
     /usr/local/sbin/docker-cleanup
 
 RUN \
     mkdir -p /data/wordlists && \
     cd /usr/src && \
-    wget "http://kaino.kotus.fi/sanat/nykysuomi/kotus-sanalista-v1.tar.gz" && \
+    curl -fSL "http://kaino.kotus.fi/sanat/nykysuomi/kotus-sanalista-v1.tar.gz" -o "kotus-sanalista-v1.tar.gz" && \
     tar xzf kotus-sanalista-v1.tar.gz && \
     sed -ne 's,.*<s>\(.*\)</s>.*,\1,p' kotus-sanalista_v1/kotus-sanalista_v1.xml > finnish.txt && \
     mv finnish.txt /data/wordlists/ && \
@@ -56,6 +56,7 @@ RUN \
 RUN \
     mkdir -p /data/wordlists/passwords && \
     cd /usr/src && \
-    git clone --depth=1 https://github.com/danielmiessler/SecLists && \
-    cp -R SecLists/Passwords/* /data/wordlists/passwords/ && \
-    rm -rf SecLists
+    curl -fSL "https://github.com/danielmiessler/SecLists/archive/master.tar.gz" -o "seclists.tar.gz" && \
+    tar xzf "seclists.tar.gz" && \
+    cp -R SecLists-master/Passwords/* /data/wordlists/passwords/ && \
+    rm -rf SecLists-master seclists.tar.gz
