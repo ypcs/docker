@@ -6,7 +6,7 @@ ENV JOHN_SHA256 XX
 VOLUME /data
 ENV WORDLIST_DIR /wordlists
 
-RUN mkdir -p /data/wordlists
+RUN mkdir -p "${WORDLIST_DIR}"
 
 RUN \
     /usr/local/sbin/docker-upgrade && \
@@ -63,5 +63,10 @@ RUN \
     tar xzf "seclists.tar.gz" && \
     cp -R SecLists-master/Passwords/* "${WORDLIST_DIR}/passwords/" && \
     rm -rf SecLists-master seclists.tar.gz
+
+RUN \
+    mkdir -p "${WORDLIST_DIR}/rules"
+
+COPY rules.d/* "${WORDLIST_DIR}/rules/"
 
 WORKDIR /usr/local/john
