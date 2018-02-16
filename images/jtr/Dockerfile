@@ -4,6 +4,7 @@ ENV JOHN_VERSION 1.8.0-jumbo-1
 ENV JOHN_SHA256 XX
 
 VOLUME /data
+ENV WORDLIST_DIR /wordlists
 
 RUN mkdir -p /data/wordlists
 
@@ -48,18 +49,19 @@ RUN \
     /usr/local/sbin/docker-cleanup
 
 RUN \
-    mkdir -p /data/wordlists && \
+    mkdir -p "${WORDLIST_DIR}" && \
     cd /usr/src && \
     curl -fSL "http://kaino.kotus.fi/sanat/nykysuomi/kotus-sanalista-v1.tar.gz" -o "kotus-sanalista-v1.tar.gz" && \
     tar xzf kotus-sanalista-v1.tar.gz && \
-    sed -ne 's,.*<s>\(.*\)</s>.*,\1,p' kotus-sanalista_v1/kotus-sanalista_v1.xml > finnish.txt && \
-    mv finnish.txt /data/wordlists/ && \
+    sed -ne 's,.*<s>\(.*\)</s>.*,\1,p' kotus-sanalista_v1/kotus-sanalista_v1.xml > "${WORDLIST_DIR}/finnish.txt" && \
     rm -rf kotus-sanalista*
 
 RUN \
-    mkdir -p /data/wordlists/passwords && \
+    mkdir -p "${WORDLIST_DIR}/passwords" && \
     cd /usr/src && \
     curl -fSL "https://github.com/danielmiessler/SecLists/archive/master.tar.gz" -o "seclists.tar.gz" && \
     tar xzf "seclists.tar.gz" && \
-    cp -R SecLists-master/Passwords/* /data/wordlists/passwords/ && \
+    cp -R SecLists-master/Passwords/* "${WORDLIST_DIR}/passwords/" && \
     rm -rf SecLists-master seclists.tar.gz
+
+WORKDIR /usr/local/john
