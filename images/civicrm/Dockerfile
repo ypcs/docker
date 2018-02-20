@@ -2,6 +2,8 @@ FROM ypcs/drupal:7
 
 ENV CIVICRM_DATABASE_USER civicrm
 ENV CIVICRM_DATABASE_PASSWORD civicrm
+ENV CIVICRM_DATABASE_HOST civicrm
+ENV CIVICRM_DATABASE_NAME civicrm
 
 ENV CIVICRM_VERSION 4.7.29
 ENV CIVICRM_SHA256 5a6dd2e096ddabe95f73c8f07f9329dc607489170f51ecdc45d2f211a443bdae
@@ -14,6 +16,7 @@ RUN \
     apt-get update && \
     apt-get --assume-yes upgrade && \
     apt-get --assume-yes install \
+        curl \
         mariadb-client \
         ssmtp && \
     /usr/local/sbin/docker-cleanup
@@ -32,6 +35,7 @@ COPY 404.html /var/www/html/404.html
 COPY 50x.html /var/www/html/50x.html
 
 COPY download.sh /usr/local/sbin/civicrm-install
+COPY setup.sh /usr/local/sbin/civicrm-setup
 
 WORKDIR /var/www
 
