@@ -16,7 +16,7 @@ then
             in
                 *.sh)
                     echo "$0: running $f"
-                    . "$f"
+                    . "$f" &
                     ;;
                 *)
                    echo "$0: ignoring $f"
