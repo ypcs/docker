@@ -31,17 +31,19 @@ curl \
 
 echo "Submit CiviCRM install request"
 curl \
-    --cookie-jar "${TEMPFILE}" \
+    --cookie "${TEMPFILE}" \
     -X POST \
     -F "mysql[server]=${CIVICRM_DATABASE_HOST}" \
-    -F "mysql[user]=${CIVICRM_DATABASE_USER}" \
+    -F "mysql[username]=${CIVICRM_DATABASE_USER}" \
     -F "mysql[password]=${CIVICRM_DATABASE_PASSWORD}" \
     -F "mysql[database]=${CIVICRM_DATABASE_NAME}" \
     -F "drupal[server]=${DRUPAL_DATABASE_HOST}" \
-    -F "drupal[user]=${DRUPAL_DATABASE_USER}" \
+    -F "drupal[username]=${DRUPAL_DATABASE_USER}" \
     -F "drupal[password]=${DRUPAL_DATABASE_PASSWORD}" \
     -F "drupal[database]=${DRUPAL_DATABASE_NAME}" \
     -F "go=1" \
+    -F "seedLanguage=en_US" \
+    -F "loadGenerated=0" \
     "${CIVICRM_INSTALL_URL}"
 
 # force_reinstall=1
