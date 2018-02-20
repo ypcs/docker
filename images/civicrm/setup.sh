@@ -22,18 +22,16 @@ TEMPFILE="$(mktemp)"
 echo "Login to Drupal"
 curl \
     --cookie-jar "${TEMPFILE}" \
-    --silent \
     -X POST \
     -F "name=${DRUPAL_USERNAME}" \
     -F "pass=${DRUPAL_PASSWORD}" \
     -F "form_id=user_login" \
     -F "op=Log in" \
-    "${DRUPAL_LOGIN_URL}" 1>/dev/null
+    "${DRUPAL_LOGIN_URL}"
 
 echo "Submit CiviCRM install request"
 curl \
     --cookie "${TEMPFILE}" \
-    --silent \
     -X POST \
     -F "mysql[server]=${CIVICRM_DATABASE_HOST}" \
     -F "mysql[username]=${CIVICRM_DATABASE_USER}" \
@@ -46,7 +44,7 @@ curl \
     -F "go=1" \
     -F "seedLanguage=en_US" \
     -F "loadGenerated=0" \
-    "${CIVICRM_INSTALL_URL}" 1>/dev/null
+    "${CIVICRM_INSTALL_URL}"
 
 # force_reinstall=1
 
