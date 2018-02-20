@@ -19,8 +19,18 @@ fi
 
 cd "${DRUPAL_ROOT}"
 
-drush site-install standard -y \
-    --db-url="mysql://${DRUPAL_DB_USER}:${DRUPAL_DB_PASSWORD}@${DRUPAL_DB_HOST}/${DRUPAL_DB}" \
-    --site-name="${DRUPAL_SITE}" \
-    --account-name="${DRUPAL_USERNAME}" \
-    --account-pass="${DRUPAL_PASSWORD}"
+set +e
+drush status bootstrap | grep -q Successful
+STATUS="$?"
+set -e
+
+if [ "${STATUS}" = "1" ]
+then
+    drush site-install standard -y \
+        --db-url="mysql://${DRUPAL_DB_USER}:${DRUPAL_DB_PASSWORD}@${DRUPAL_DB_HOST}/${DRUPAL_DB}" \
+        --site-name="${DRUPAL_SITE}" \
+        --account-name="${DRUPAL_USERNAME}" \
+        --account-pass="${DRUPAL_PASSWORD}"
+else
+    echo "Drupal already bootstrapped, skipping site-install!"
+fi
