@@ -5,7 +5,7 @@ RUN \
     apt-get --assume-yes install \
         git \
         mkdocs \
-        mkdocs-bootstrap
+        mkdocs-bootstrap && \
     /usr/local/sbin/docker-cleanup
 
 RUN \
