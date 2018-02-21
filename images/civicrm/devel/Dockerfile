@@ -1,4 +1,5 @@
 FROM ypcs/civicrm:latest
+ENV DOCUMENT_ROOT /var/www
 
 RUN \
     /usr/local/sbin/docker-upgrade && \
@@ -7,6 +8,15 @@ RUN \
         mkdocs \
         mkdocs-bootstrap && \
     /usr/local/sbin/docker-cleanup
+
+RUN \
+    echo "TODO: install drupal"
+
+RUN \
+    echo "TODO: clone civicrm repository?"
+
+RUN \
+    echo "TODO: clone other civicrm docs, w/o shallow?"
 
 RUN \
     mkdir -p /usr/local/share/doc && \
