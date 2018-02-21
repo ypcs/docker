@@ -25,6 +25,7 @@ then
         done
 
     fi
+    touch /initialized
 fi
 
 echo "Executing $@"
