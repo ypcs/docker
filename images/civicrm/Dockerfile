@@ -8,6 +8,9 @@ ENV CIVICRM_DATABASE_NAME civicrm
 ENV CIVICRM_VERSION 4.7.29
 ENV CIVICRM_SHA256 5a6dd2e096ddabe95f73c8f07f9329dc607489170f51ecdc45d2f211a443bdae
 
+ENV CIVICRM_CV_SHA256 3708d502d1a6d4bcdf812908ed141a19fa0fc14d20f5a0d755bfa0af9e6b6b14 
+ENV CIVICRM_CV_URL https://download.civicrm.org/cv/cv.phar
+
 ARG VCS_REF
 LABEL org.label-schema.vcs-ref=$VCS_REF
 
@@ -20,6 +23,11 @@ RUN \
         mariadb-client \
         ssmtp && \
     /usr/local/sbin/docker-cleanup
+
+RUN \
+    curl -fSL "${CIVICRM_CV_URL}" -o /usr/local/bin/cv && \
+    echo "${CIVICRM_CV_SHA256} *cv" |sha256sum -c /usr/local/bin/cv && \
+    chmod +x /usr/local/bin/cv
 
 # Disable PHP daemon mode
 RUN sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/7.0/fpm/php-fpm.conf
