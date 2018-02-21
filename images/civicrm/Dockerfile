@@ -26,7 +26,7 @@ RUN \
 
 RUN \
     curl -fSL "${CIVICRM_CV_URL}" -o /usr/local/bin/cv && \
-    echo "${CIVICRM_CV_SHA256} *cv" |sha256sum -c /usr/local/bin/cv && \
+    echo "${CIVICRM_CV_SHA256} /usr/local/bin/cv" |sha256sum -c - && \
     chmod +x /usr/local/bin/cv
 
 # Disable PHP daemon mode
