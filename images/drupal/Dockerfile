@@ -37,6 +37,14 @@ RUN \
     mv drush.phar /usr/local/bin/drush && \
     chmod +x /usr/local/bin/drush
 
+RUN \
+    cd /var/www && \
+    drush pm-download \
+        --drupal-project-rename=drupal \
+        drupal-${DRUPAL_VERSION} && \
+    cp -R drupal/* html/ && \
+    rm -rf drupal
+
 COPY drupal-permissions.sh /usr/local/sbin/drupal-permissions
 COPY drupal-setup.sh /usr/local/sbin/drupal-setup
 
