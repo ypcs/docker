@@ -10,11 +10,14 @@ DRUPAL_MODULE_DIRECTORY="${DRUPAL_MODULE_DIRECTORY:-${DOCUMENT_ROOT}/sites/all/m
 TEMPDIR="$(realpath "$(mktemp -d)")"
 cd "${TEMPDIR}"
 
+echo "Downloading CiviCRM ${CIVICRM_VERSION}"
 curl -fSL "https://storage.googleapis.com/civicrm/civicrm-stable/${CIVICRM_VERSION}/civicrm-${CIVICRM_VERSION}-drupal.tar.gz" -o "civicrm.tar.gz"
+echo "Downloading CiviCRM ${CIVICRM_VERSION} localization files"
 curl -fSL "https://storage.googleapis.com/civicrm/civicrm-stable/${CIVICRM_VERSION}/civicrm-${CIVICRM_VERSION}-l10n.tar.gz" -o "civicrm-l10n.tar.gz"
 
 echo "${CIVICRM_SHA256} *civicrm.tar.gz" |sha256sum -c -
 
+echo "Unpacking CiviCRM"
 cd "${DRUPAL_MODULE_DIRECTORY}"
 tar xzf "${TEMPDIR}/civicrm.tar.gz"
 tar xzf "${TEMPDIR}/civicrm-l10n.tar.gz"
