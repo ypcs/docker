@@ -27,5 +27,6 @@ then
     fi
 fi
 
+echo "Executing $@"
 exec "$@"
 
