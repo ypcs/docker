@@ -20,7 +20,8 @@ RUN \
     apt-get update && \
     apt-get --assume-yes upgrade && \
     apt-get --assume-yes install \
-        curl && \
+        curl \
+        mariadb-client && \
     /usr/local/sbin/docker-cleanup
 
 RUN \
