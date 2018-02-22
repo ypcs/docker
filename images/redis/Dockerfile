@@ -3,7 +3,7 @@ FROM ypcs/debian:stretch
 RUN \
     /usr/local/sbin/docker-upgrade && \
     apt-get --assume-yes install \
-        redis-server
+        redis-server && \
     /usr/local/sbin/docker-cleanup
 
 EXPOSE 6379
