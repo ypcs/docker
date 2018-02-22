@@ -41,4 +41,3 @@ COPY drupal-setup.sh /usr/local/sbin/drupal-setup
 RUN \
     /usr/local/sbin/drupal-download
 
-WORKDIR /var/www/html
