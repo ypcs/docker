@@ -29,23 +29,16 @@ RUN \
         php${PHP_VERSION}-xml && \
     /usr/local/sbin/docker-cleanup
 
-WORKDIR /tmp
-
 RUN \
-    curl -fSL "https://github.com/drush-ops/drush/releases/download/${DRUSH_VERSION}/drush.phar" -o drush.phar && \
-    echo "${DRUSH_SHA256} *drush.phar" |sha256sum -c - && \
-    mv drush.phar /usr/local/bin/drush && \
+    curl -fSL "https://github.com/drush-ops/drush/releases/download/${DRUSH_VERSION}/drush.phar" -o /usr/local/bin/drush && \
+    echo "${DRUSH_SHA256} /usr/local/bin/drush" |sha256sum -c - && \
     chmod +x /usr/local/bin/drush
 
-RUN \
-    cd /var/www && \
-    drush pm-download \
-        --drupal-project-rename=drupal \
-        drupal-${DRUPAL_VERSION} && \
-    cp -R drupal/* html/ && \
-    rm -rf drupal
-
+COPY download.sh /usr/local/sbin/drupal-download
 COPY drupal-permissions.sh /usr/local/sbin/drupal-permissions
 COPY drupal-setup.sh /usr/local/sbin/drupal-setup
+
+RUN \
+    /usr/local/sbin/drupal-download
 
 WORKDIR /var/www/html
