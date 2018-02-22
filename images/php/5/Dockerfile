@@ -28,9 +28,9 @@ RUN \
         echo 'catch_workers_output = yes' ; \
     } |tee /etc/php${PHP_VERSION}/fpm/pool.d/zz-docker.conf && \
     sed -i "s/^listen = .*/listen = 9000/g" /etc/php${PHP_VERSION}/fpm/pool.d/www.conf && \
+    sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php${PHP_VERSION}/fpm/php-fpm.conf && \
     if [ -x "/usr/sbin/php${PHP_VERSION}-fpm" ] ; then \
-        ln -sf "/usr/sbin/php${PHP_VERSION}-fpm" "/usr/sbin/php-fpm${PHP_VERSION}" && \
-        sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php${PHP_VERSION}/fpm/php-fpm.conf ; \
+        ln -sf "/usr/sbin/php${PHP_VERSION}-fpm" "/usr/sbin/php-fpm${PHP_VERSION}" ; \
     fi
 
 
