@@ -11,4 +11,4 @@ EXPOSE 6379
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["redis-server"]
+CMD ["redis-server", "/etc/redis/redis.conf"]
