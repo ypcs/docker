@@ -9,8 +9,12 @@ ENV CIVICRM_VERSION 4.7.29
 ENV CIVICRM_SHA256 5a6dd2e096ddabe95f73c8f07f9329dc607489170f51ecdc45d2f211a443bdae
 ENV CIVICRM_L10N_SHA256 d8955ed86167cf6543d649f19eaa8cc16e6443aaa33f4bd8e9499654c8389fd7
 
+ENV CIVICRM_INSTALL_URL http://web/sites/all/modules/civicrm/install/index.php
+
 ENV CIVICRM_CV_SHA256 3708d502d1a6d4bcdf812908ed141a19fa0fc14d20f5a0d755bfa0af9e6b6b14 
 ENV CIVICRM_CV_URL https://download.civicrm.org/cv/cv.phar
+
+ENV DRUPAL_LOGIN_URL http://web/user/login
 
 ARG VCS_REF
 LABEL org.label-schema.vcs-ref=$VCS_REF

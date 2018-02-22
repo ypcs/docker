@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+[ -z "${CIVICRM_VERSION}" ] && echo "Missing CIVICRM_VERSION!" && exit 1 
+[ -z "${CIVICRM_SHA256}" ] && echo "Missing CIVICRM_SHA256!" && exit 1 
+[ -z "${CIVICRM_L10N_SHA256}" ] && echo "Missing CIVICRM_L10N_SHA256!" && exit 1 
+
 cd /var/www/html/sites/all/modules
 
 curl -fSL "https://storage.googleapis.com/civicrm/civicrm-stable/${CIVICRM_VERSION}/civicrm-${CIVICRM_VERSION}-drupal.tar.gz" -o "civicrm.tar.gz"
