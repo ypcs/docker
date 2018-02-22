@@ -28,7 +28,7 @@ RUN \
         echo 'catch_workers_output = yes' ; \
     } |tee /etc/php/${PHP_VERSION}/fpm/pool.d/zz-docker.conf && \
     sed -i "s/^listen = .*/listen = 9000/g" /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf && \
-    sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/${PHP_VERSION}/fpm/php-fpm.conf && \
+    sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/${PHP_VERSION}/fpm/php-fpm.conf
 
 RUN mkdir -p /entrypoint-init.d
 COPY entrypoint.sh /entrypoint.sh
