@@ -1,14 +1,49 @@
 
-%.img: chroot-%
-	$(SUDO) ./scripts/convert-chroot-to-image.sh $< $@
-
-%.box: chroot-%-vagrant
-	$(SUDO) ./scripts/convert-chroot-to-image.sh $< $@
-	/usr/share/doc/vagrant-libvirt/examples/create_box.sh $< $@
-
 chroot-%-vagrant: chroot-%
 	$(SUDO) rsync -avh $</* $@
 	$(SUDO) chroot $@ /usr/local/sbin/docker-upgrade
 	$(SUDO) chroot $@ apt-get --assume-yes install cloud-init
 	$(SUDO) chroot $@ /usr/local/sbin/docker-cleanup
 	$(SUDO) cp data/cloud.yml $@/etc/cloud/cloud.cfg.d/vagrant.cfg
+
+%.raw: chroot-%
+	qemu-img create -f raw "$@" 50G
+	$(SUDO) /sbin/mkfs.ext4 "$@"
+
+	mkdir mnt.$@
+	$(SUDO) /bin/mount "$@" mnt.$@
+
+	$(SUDO) /usr/bin/rsync --progress -ah $</* mnt.$@/
+
+	$(SUDO) /bin/umount -l mnt.$@
+	rm -rf mnt.$@
+
+%.img: %.raw
+	qemu-img convert -f raw -O qcow2 $< $@
+
+%.raw.vagrant: %.raw
+	cp $< $@
+
+	mkdir mnt.$<
+
+	$(SUDO) mount $< mnt.$<
+	$(SUDO) mount -t proc none mnt.$</proc
+	$(SUDO) mount -t sysfs none mnt.$</sys
+	$(SUDO) mount -o bind /dev mnt.$</dev
+
+	$(SUDO) chroot mnt.$< /usr/local/sbin/docker-upgrade
+
+	$(SUDO) chroot mnt.$< apt-get --assume-yes install cloud-init grub2 sudo
+
+	$(SUDO) chroot mnt.$< /usr/local/sbin/docker-cleanup
+
+	$(SUDO) umount -l mnt.$</proc
+	$(SUDO) umount -l mnt.$</sys
+	$(SUDO) umount -l mnt.$</dev
+	$(SUDO) umount -l mnt.$<
+
+%.img.vagrant: %.raw.vagrant
+	qemu-img convert -f raw -O qcow2 $< $@
+
+%.box: %.img.vagrant
+	/usr/share/doc/vagrant-libvirt/examples/create_box.sh $< $@

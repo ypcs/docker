@@ -20,8 +20,11 @@ include Makefile.docker
 include Makefile.vagrant
 
 clean:
-	$(SUDO) rm -rf chroot-*
 	rm -f *.tar *.box *.img
+
+purge:
+	$(SUDO) rm -rf chroot-*
+	rm -f *.raw *.raw.*
 
 $(DISTROS): %:
 	$(MAKE) $($@_SUITES)
