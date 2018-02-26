@@ -25,10 +25,11 @@ clean:
 	$(SUDO) rm -rf chroot-*
 	rm -f *.tar *.box *.img
 
-$(DISTROS): %: $(%_SUITES)
+$(DISTROS): %:
 	echo $@
 	echo $<
 	echo $^
+	$(MAKE) $($@_SUITES)
 
 $(DEBIAN_SUITES): % : debian-%.tar
 
