@@ -75,6 +75,10 @@ chmod +x /usr/local/sbin/docker-upgrade
 
 /usr/local/sbin/docker-upgrade full
 
+set +e
+apt-get install usrmerge --assume-yes
+set -e
+
 # cleanup
 cat > /usr/local/sbin/docker-cleanup << EOF
 #!/bin/sh
