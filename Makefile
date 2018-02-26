@@ -33,7 +33,8 @@ $(UBUNTU_SUITES): % : ubuntu-%.tar
 %.img: chroot-%
 	$(SUDO) ./scripts/convert-chroot-to-image.sh $< $@
 
-%.box: %.img
+%.box: chroot-%-vagrant
+	$(SUDO) ./scripts/convert-chroot-to-image.sh $< $@
 	/usr/share/doc/vagrant-libvirt/examples/create_box.sh $< $@
 
 chroot-debian-%:
@@ -48,6 +49,13 @@ chroot-ubuntu-%:
 	$(SUDO) cp setup.sh $@/tmp/setup.sh
 	$(SUDO) chmod +x $@/tmp/setup.sh
 	$(SUDO) chroot $@ /tmp/setup.sh ubuntu $* $(UBUNTU_MIRROR)
+	$(SUDO) rm -f $@/tmp/setup.sh
+
+chroot-%-vagrant: chroot-%
+	$(SUDO) rsync -avh $< $@
+	$(SUDO) cp scripts/provision-vagrant.sh $@/tmp/setup.sh
+	$(SUDO) chmod +x $@/tmp/setup.sh
+	$(SUDO) chroot $@ /tmp/setup.sh
 	$(SUDO) rm -f $@/tmp/setup.sh
 
 import-all:
