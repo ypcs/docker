@@ -1,10 +1,12 @@
 NAMESPACE = ypcs
 
+APT_PROXY ?=
+
 DEBIAN_SUITES = jessie stretch buster sid
-DEBIAN_MIRROR ?= http://deb.debian.org/debian
+DEBIAN_MIRROR ?= http://$(patsubst http://%,%,$(APT_PROXY))deb.debian.org/debian
 
 UBUNTU_SUITES = artful bionic trusty xenial
-UBUNTU_MIRROR ?= http://archive.ubuntu.com/ubuntu
+UBUNTU_MIRROR ?= http://$(patsubst http://%,%,$(APT_PROXY))archive.ubuntu.com/ubuntu
 
 SUDO = /usr/bin/sudo
 DEBOOTSTRAP = /usr/sbin/debootstrap
