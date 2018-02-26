@@ -1,3 +1,5 @@
+DEBOOTSTRAP = /usr/sbin/debootstrap
+DEBOOTSTRAP_FLAGS = --variant=minbase
 
 chroot-debian-%:
 	$(SUDO) $(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(DEBIAN_MIRROR)

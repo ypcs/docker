@@ -11,8 +11,6 @@ UBUNTU_MIRROR ?= http://$(patsubst http://%,%,$(APT_PROXY))archive.ubuntu.com/ub
 DISTROS = debian ubuntu
 
 SUDO = /usr/bin/sudo
-DEBOOTSTRAP = /usr/sbin/debootstrap
-DEBOOTSTRAP_FLAGS = --variant=minbase
 TAR = /bin/tar
 
 all: $(DEBIAN_SUITES) $(UBUNTU_SUITES)
