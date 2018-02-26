@@ -1,0 +1,14 @@
+
+chroot-debian-%:
+	$(SUDO) $(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(DEBIAN_MIRROR)
+	$(SUDO) cp setup.sh $@/tmp/setup.sh
+	$(SUDO) chmod +x $@/tmp/setup.sh
+	$(SUDO) chroot $@ /tmp/setup.sh debian $* $(DEBIAN_MIRROR)
+	$(SUDO) rm -f $@/tmp/setup.sh
+
+chroot-ubuntu-%:
+	$(SUDO) $(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(UBUNTU_MIRROR)
+	$(SUDO) cp setup.sh $@/tmp/setup.sh
+	$(SUDO) chmod +x $@/tmp/setup.sh
+	$(SUDO) chroot $@ /tmp/setup.sh ubuntu $* $(UBUNTU_MIRROR)
+	$(SUDO) rm -f $@/tmp/setup.sh
