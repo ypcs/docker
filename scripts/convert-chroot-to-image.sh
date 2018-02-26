@@ -21,11 +21,11 @@ then
     exit 1
 fi
 
+RIMAGE="${IMAGE}.raw"
+qemu-img create -f raw "${RIMAGE}" 50G
+/sbin/mkfs.ext4 "${RIMAGE}"
 
-qemu-img create -f raw "${IMAGE}" 50G
-/sbin/mkfs.ext4 "${IMAGE}"
-
-FIMAGE="$(realpath "${IMAGE}")"
+FIMAGE="$(realpath "${RIMAGE}")"
 MPATH="$(realpath $(mktemp -d))"
 
 mount "${FIMAGE}" "${MPATH}"
@@ -35,3 +35,5 @@ cd ..
 
 umount -l "${MPATH}"
 rm -rf "${MPATH}"
+
+qemu-img convert -f raw -O qcow2 "${RIMAGE}" "${IMAGE}"
