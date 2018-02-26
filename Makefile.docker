@@ -1,0 +1,6 @@
+push:
+    docker push $(NAMESPACE)/debian
+    docker push $(NAMESPACE)/ubuntu
+
+import-all:
+    ./import.sh
