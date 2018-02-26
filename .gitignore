@@ -4,3 +4,4 @@ chroot-*
 *.tar
 
 .vagrant
+*.box
