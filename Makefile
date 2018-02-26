@@ -20,28 +20,29 @@ push:
 	docker push $(NAMESPACE)/ubuntu
 
 clean:
-	rm -rf *.tar chroot-*
+	$(SUDO) rm -rf chroot-*
+	rm -f *.tar
 
 $(DEBIAN_SUITES): % : debian-%.tar
 
 $(UBUNTU_SUITES): % : ubuntu-%.tar
 
 %.tar: chroot-%
-	$(TAR) -C $< -c . -f $@
+	$(SUDO) $(TAR) -C $< -c . -f $@
 
 chroot-debian-%:
-	$(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(DEBIAN_MIRROR)
-	cp setup.sh $@/tmp/setup.sh
-	chmod +x $@/tmp/setup.sh
-	chroot $@ /tmp/setup.sh debian $* $(DEBIAN_MIRROR)
-	rm -f $@/tmp/setup.sh
+	$(SUDO) $(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(DEBIAN_MIRROR)
+	$(SUDO) cp setup.sh $@/tmp/setup.sh
+	$(SUDO) chmod +x $@/tmp/setup.sh
+	$(SUDO) chroot $@ /tmp/setup.sh debian $* $(DEBIAN_MIRROR)
+	$(SUDO) rm -f $@/tmp/setup.sh
 
 chroot-ubuntu-%:
-	$(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(UBUNTU_MIRROR)
-	cp setup.sh $@/tmp/setup.sh
-	chmod +x $@/tmp/setup.sh
-	chroot $@ /tmp/setup.sh ubuntu $* $(UBUNTU_MIRROR)
-	rm -f $@/tmp/setup.sh
+	$(SUDO) $(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(UBUNTU_MIRROR)
+	$(SUDO) cp setup.sh $@/tmp/setup.sh
+	$(SUDO) chmod +x $@/tmp/setup.sh
+	$(SUDO) chroot $@ /tmp/setup.sh ubuntu $* $(UBUNTU_MIRROR)
+	$(SUDO) rm -f $@/tmp/setup.sh
 
 import-all:
 	./import.sh
