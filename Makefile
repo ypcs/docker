@@ -21,7 +21,7 @@ push:
 
 clean:
 	$(SUDO) rm -rf chroot-*
-	rm -f *.tar
+	rm -f *.tar *.box *.img
 
 $(DEBIAN_SUITES): % : debian-%.tar
 
