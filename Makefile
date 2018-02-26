@@ -30,6 +30,12 @@ $(UBUNTU_SUITES): % : ubuntu-%.tar
 %.tar: chroot-%
 	$(SUDO) $(TAR) -C $< -c . -f $@
 
+%.img: chroot-%
+	$(SUDO) ./scripts/convert-chroot-to-image.sh $< $@
+
+%.box: %.img
+	/usr/share/doc/vagrant-libvirt/examples/create_box.sh $< $@
+
 chroot-debian-%:
 	$(SUDO) $(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(DEBIAN_MIRROR)
 	$(SUDO) cp setup.sh $@/tmp/setup.sh
