@@ -26,9 +26,6 @@ clean:
 	rm -f *.tar *.box *.img
 
 $(DISTROS): %:
-	echo $@
-	echo $<
-	echo $^
 	$(MAKE) $($@_SUITES)
 
 $(DEBIAN_SUITES): % : debian-%.tar
