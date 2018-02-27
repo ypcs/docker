@@ -1,5 +1,7 @@
 FROM ypcs/drupal:7
 
+ENV CIVICRM_ENVIRONMENT production
+
 ENV CIVICRM_DATABASE_USER civicrm
 ENV CIVICRM_DATABASE_PASSWORD civicrm
 ENV CIVICRM_DATABASE_HOST civicrm
@@ -35,6 +37,8 @@ RUN \
 
 COPY download.sh /usr/local/sbin/civicrm-download
 COPY setup.sh /usr/local/sbin/civicrm-setup
+
+COPY *.php /usr/local/share/civicrm/
 
 RUN \
     /usr/local/sbin/civicrm-download
