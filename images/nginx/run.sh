@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
-cron
+if [ ! -e "/disable-cron" ]
+then
+    cron
+fi
 
 nginx -g "daemon off;" 
