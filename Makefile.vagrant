@@ -21,27 +21,32 @@ chroot-%-vagrant: chroot-%
 %.img: %.raw
 	qemu-img convert -f raw -O qcow2 $< $@
 
+mnt.%: %
+	mkdir -p $@
+	$(SUDO) mount $< $@
+	$(SUDO) mount -t proc none $@/proc
+	$(SUDO) mount -t sysfs none $@/sys
+	$(SUDO) mount -o bind /dev $@/dev
+	
+umnt.%: mnt.%
+	$(SUDO) umount -l $</proc
+	$(SUDO) umount -l $</sys
+	$(SUDO) umount -l $</dev
+	$(SUDO) umount -l $<
+	rm -rf $<
+
 %.raw.vagrant: %.raw
 	cp $< $@
+	$(MAKE) mnt.$@
 
-	mkdir mnt.$<
+	$(SUDO) chroot mnt.$@ /usr/local/sbin/docker-upgrade
 
-	$(SUDO) mount $< mnt.$<
-	$(SUDO) mount -t proc none mnt.$</proc
-	$(SUDO) mount -t sysfs none mnt.$</sys
-	$(SUDO) mount -o bind /dev mnt.$</dev
+	#cat data/debconf-grub |$(SUDO) chroot mnt.$@ debconf-set-selections 
+	$(SUDO) chroot mnt.$@ apt-get --assume-yes install cloud-init  sudo
 
-	$(SUDO) chroot mnt.$< /usr/local/sbin/docker-upgrade
+	$(SUDO) chroot mnt.$@ /usr/local/sbin/docker-cleanup
 
-	#cat data/debconf-grub |$(SUDO) chroot mnt.$< debconf-set-selections 
-	$(SUDO) chroot mnt.$< apt-get --assume-yes install cloud-init  sudo
-
-	$(SUDO) chroot mnt.$< /usr/local/sbin/docker-cleanup
-
-	$(SUDO) umount -l mnt.$</proc
-	$(SUDO) umount -l mnt.$</sys
-	$(SUDO) umount -l mnt.$</dev
-	$(SUDO) umount -l mnt.$<
+	$(MAKE) umnt.$@
 
 %.img.vagrant: %.raw.vagrant
 	qemu-img convert -f raw -O qcow2 $< $@
