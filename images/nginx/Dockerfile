@@ -22,5 +22,8 @@ RUN \
 EXPOSE 80
 STOPSIGNAL SIGTERM
 
+COPY conf.d/* /etc/nginx/conf.d/
+COPY snippets/* /etc/nginx/snippets/
+
 CMD ["nginx", "-g", "daemon off;"]
 
