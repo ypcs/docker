@@ -6,8 +6,11 @@ RUN \
     apt-get --assume-yes install \
         git \
         mkdocs \
-        mkdocs-bootstrap && \
+        mkdocs-bootstrap \
+        php${PHP_VERSION}-xdebug && \
     /usr/local/sbin/docker-cleanup
+
+COPY php-xdebug.ini /etc/php/${PHP_VERSION}/fpm/conf.d/99-xdebug.ini
 
 RUN \
     echo "TODO: install drupal"
