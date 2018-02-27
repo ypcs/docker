@@ -33,7 +33,8 @@ chroot-%-vagrant: chroot-%
 
 	$(SUDO) chroot mnt.$< /usr/local/sbin/docker-upgrade
 
-	$(SUDO) chroot mnt.$< DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install cloud-init grub2 sudo
+	#cat data/debconf-grub |$(SUDO) chroot mnt.$< debconf-set-selections 
+	$(SUDO) chroot mnt.$< apt-get --assume-yes install cloud-init  sudo
 
 	$(SUDO) chroot mnt.$< /usr/local/sbin/docker-cleanup
 
