@@ -26,5 +26,5 @@ RUN \
     git clone --depth=1 https://github.com/civicrm/civicrm-sysadmin-guide /usr/local/share/doc/civicrm-sysadmin-guide
 
 RUN \
-    mkdir -p /usr/local/share/doc && \
+    mkdir -p /usr/local/share && \
     git clone --depth=1 https://github.com/civicrm/civicrm-buildkit /usr/local/share/civicrm-buildkit
