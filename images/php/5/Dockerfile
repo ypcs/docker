@@ -13,8 +13,9 @@ ENV SITE_URL http://localhost
 RUN \
     /usr/local/sbin/docker-upgrade && \
     apt-get --assume-yes install \
-    php-db \
-	php${PHP_VERSION}-fpm && \
+        msmtp-mta \
+        php-db \
+	    php${PHP_VERSION}-fpm && \
     /usr/local/sbin/docker-cleanup
 
 RUN \
