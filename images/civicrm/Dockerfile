@@ -13,7 +13,7 @@ ENV CIVICRM_L10N_SHA256 d8955ed86167cf6543d649f19eaa8cc16e6443aaa33f4bd8e9499654
 
 ENV CIVICRM_INSTALL_URL http://web/sites/all/modules/civicrm/install/index.php
 
-ENV CIVICRM_CV_SHA256 3708d502d1a6d4bcdf812908ed141a19fa0fc14d20f5a0d755bfa0af9e6b6b14 
+ENV CIVICRM_CV_SHA256 500bcc61900baf59a98eef5c1bdedc4c1559fbd9339413573213ca84a5a3fef5
 ENV CIVICRM_CV_URL https://download.civicrm.org/cv/cv.phar
 
 ENV DRUPAL_LOGIN_URL http://web/user/login
