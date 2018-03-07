@@ -17,11 +17,18 @@ RUN \
         build-essential && \
     cd /usr/src && \
     git clone --depth=1 https://github.com/hashcat/hashcat.git hashcat && \
+    git clone --depth=1 https://github.com/hashcat/hashcat-utils hashcat-utils && \
     cd hashcat && \
     git submodule update --init && \
     make && \
     make install && \
+    cd ../hashcat-utils/src && \
+    make && \
+    cp ../bin/* /usr/local/bin/ && \
+    cd ../.. && \
+    rm -rf hashcat hashcat-utils && \
     apt-get remove --assume-yes \
         git \
         build-essential && \
     /usr/local/sbin/docker-cleanup
+
