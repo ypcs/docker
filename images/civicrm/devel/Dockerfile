@@ -8,6 +8,7 @@ RUN \
         mkdocs \
         mkdocs-bootstrap \
         nodejs \
+        php${PHP_VERSION}-bcmath \
         php${PHP_VERSION}-xdebug \
         unzip \
         zip && \
