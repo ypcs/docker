@@ -7,9 +7,11 @@ RUN \
         git \
         mkdocs \
         mkdocs-bootstrap \
+        nodejs \
         php${PHP_VERSION}-xdebug \
         unzip \
         zip && \
+    update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10 && \
     /usr/local/sbin/docker-cleanup
 
 COPY php-xdebug.ini /etc/php/${PHP_VERSION}/fpm/conf.d/99-xdebug.ini
