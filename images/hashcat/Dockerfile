@@ -1,7 +1,7 @@
 FROM ypcs/debian:buster
 
-ENV HASHCAT_VERSION 3.6.0
-ENV HASHCAT_UTILS_VERSION 1.8
+ENV HASHCAT_VERSION v4.1.0
+ENV HASHCAT_UTILS_VERSION v1.8
 
 RUN \
     /usr/local/sbin/docker-upgrade && \
@@ -16,15 +16,18 @@ RUN \
         git \
         build-essential && \
     cd /usr/src && \
-    git clone --depth=1 https://github.com/hashcat/hashcat.git hashcat && \
-    git clone --depth=1 https://github.com/hashcat/hashcat-utils hashcat-utils && \
+    git clone https://github.com/hashcat/hashcat.git hashcat && \
+    git clone https://github.com/hashcat/hashcat-utils hashcat-utils && \
     cd hashcat && \
+    git checkout ${HASHCAT_VERSION} && \
     git submodule update --init && \
     make && \
     make install && \
     cd ../hashcat-utils/src && \
+    git checkout ${HASHCAT_UTILS_VERSION} && \
     make && \
-    cp ../bin/* /usr/local/bin/ && \
+    cp *.bin /usr/local/bin/ && \
+    cp *.pl /usr/local/bin/ && \
     cd ../.. && \
     rm -rf hashcat hashcat-utils && \
     apt-get remove --assume-yes \
