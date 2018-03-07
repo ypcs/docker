@@ -7,7 +7,9 @@ RUN \
         git \
         mkdocs \
         mkdocs-bootstrap \
-        php${PHP_VERSION}-xdebug && \
+        php${PHP_VERSION}-xdebug \
+        unzip \
+        zip && \
     /usr/local/sbin/docker-cleanup
 
 COPY php-xdebug.ini /etc/php/${PHP_VERSION}/fpm/conf.d/99-xdebug.ini
@@ -28,3 +30,6 @@ RUN \
 RUN \
     mkdir -p /usr/local/share && \
     git clone --depth=1 https://github.com/civicrm/civicrm-buildkit /usr/local/share/civicrm-buildkit
+
+RUN \
+    /usr/local/share/civicrm-buildkit/bin/civi-download-tools
