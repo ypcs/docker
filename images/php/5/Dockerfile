@@ -8,6 +8,7 @@ LABEL org.label-schema.vcs-ref=$VCS_REF
 
 ENV DOCUMENT_ROOT /var/www/html
 ENV PHP_VERSION 5
+ENV SITE_URL http://localhost
 
 RUN \
     /usr/local/sbin/docker-upgrade && \
