@@ -59,17 +59,10 @@ cat > /usr/local/sbin/docker-upgrade << EOF
 #!/bin/sh
 set -e
 
-if [ -n "\${APT_PROXY}" ]
-then
-    echo "Acquire::HTTP::Proxy \"\${APT_PROXY}\";" > /etc/apt/apt.conf.d/99proxy
-fi
+echo "deprecated: $0"
 
-apt-get update
-apt-get --assume-yes upgrade
-if [ "\${1}" = "full" ]
-then
-    apt-get --assume-yes dist-upgrade
-fi
+/usr/lib/docker-helpers/apt-setup
+/usr/lib/docker-helpers/apt-upgrade
 EOF
 chmod +x /usr/local/sbin/docker-upgrade
 
@@ -79,15 +72,9 @@ chmod +x /usr/local/sbin/docker-upgrade
 cat > /usr/local/sbin/docker-cleanup << EOF
 #!/bin/sh
 set -e
-apt-get --assume-yes autoremove
-apt-get clean
+echo "deprecated: $0"
 
-rm -f /etc/apt/apt.conf.d/99proxy
-rm -rf /usr/share/doc/*
-rm -rf /usr/share/locale/*
-rm -rf /usr/share/man/*
-rm -rf /var/lib/apt/lists/* /var/cache/apt/*.bin /var/cache/apt/archives/*.deb
-mkdir -p /var/lib/apt/lists/partial
+/usr/lib/docker-helpers/apt-cleanup
 EOF
 chmod +x /usr/local/sbin/docker-cleanup
 

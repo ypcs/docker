@@ -29,6 +29,9 @@ $(UBUNTU_SUITES): % : ubuntu-%.tar
 
 chroot-debian-%:
 	$(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(DEBIAN_MIRROR)
+	mkdir -p $@/usr/lib/docker-helpers
+	cp helpers/* $@/usr/lib/docker-helpers/
+	chmod +x $@/usr/lib/docker-helpers/*
 	cp setup.sh $@/tmp/setup.sh
 	chmod +x $@/tmp/setup.sh
 	chroot $@ /tmp/setup.sh debian $* $(DEBIAN_MIRROR)
@@ -36,6 +39,9 @@ chroot-debian-%:
 
 chroot-ubuntu-%:
 	$(DEBOOTSTRAP) $(DEBOOTSTRAP_FLAGS) $* $@ $(UBUNTU_MIRROR)
+	mkdir -p $@/usr/lib/docker-helpers
+	cp helpers/* $@/usr/lib/docker-helpers/
+	chmod +x $@/usr/lib/docker-helpers/*
 	cp setup.sh $@/tmp/setup.sh
 	chmod +x $@/tmp/setup.sh
 	chroot $@ /tmp/setup.sh ubuntu $* $(UBUNTU_MIRROR)
