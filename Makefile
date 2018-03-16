@@ -1,6 +1,6 @@
 NAMESPACE = ypcs
 
-DEBIAN_SUITES = jessie stretch buster sid
+DEBIAN_SUITES = wheezy jessie stretch buster sid
 DEBIAN_MIRROR ?= http://deb.debian.org/debian
 
 UBUNTU_SUITES = artful bionic trusty xenial
