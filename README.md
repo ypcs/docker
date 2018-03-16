@@ -1,3 +1,5 @@
+# deprecated, see separate ypcs/docker-* repositories
+
 # docker
 Misc scripts for building Docker images
 
